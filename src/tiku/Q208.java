@@ -13,17 +13,17 @@ import java.util.TreeMap;
 public class Q208 {
 
     class Trie {
-        private class Node{
+        private class Node {
 
             public boolean isWord;
             public TreeMap<Character, Node> next;
 
-            public Node(boolean isWord){
+            public Node(boolean isWord) {
                 this.isWord = isWord;
                 next = new TreeMap<>();
             }
 
-            public Node(){
+            public Node() {
                 this(false);
             }
         }
@@ -36,13 +36,18 @@ public class Q208 {
          * 字典树中存储的单词数量
          */
         private int size;
-        /** Initialize your data structure here. */
+
+        /**
+         * Initialize your data structure here.
+         */
         public Trie() {
             root = new Node();
             size = 0;
         }
 
-        /** Inserts a word into the trie. */
+        /**
+         * Inserts a word into the trie.
+         */
         public void insert(String word) {
             Node cur = root;
             /**
@@ -50,9 +55,9 @@ public class Q208 {
              * 若字符c的下一个节点不存在，则在TreeMap中存入（c，new Node()）
              * 然后让当前节点的指针指向c对应的节点
              */
-            for (int i = 0; i < word.length(); i++){
+            for (int i = 0; i < word.length(); i++) {
                 char c = word.charAt(i);
-                if (cur.next.get(c) == null){
+                if (cur.next.get(c) == null) {
                     cur.next.put(c, new Node());
                 }
                 cur = cur.next.get(c);
@@ -62,18 +67,20 @@ public class Q208 {
              * 对于最后一个节点要注意首先判断它是否已经是一个单词的结尾
              * 避免例如panda和pan的情况
              */
-            if (!cur.isWord){
+            if (!cur.isWord) {
                 cur.isWord = true;
                 size++;
             }
         }
 
-        /** Returns if the word is in the trie. */
+        /**
+         * Returns if the word is in the trie.
+         */
         public boolean search(String word) {
             Node cur = root;
-            for (int i = 0; i < word.length(); i++){
+            for (int i = 0; i < word.length(); i++) {
                 char c = word.charAt(i);
-                if (cur.next.get(c) == null){
+                if (cur.next.get(c) == null) {
                     return false;
                 }
                 cur = cur.next.get(c);
@@ -87,12 +94,14 @@ public class Q208 {
             return cur.isWord;
         }
 
-        /** Returns if there is any word in the trie that starts with the given prefix. */
+        /**
+         * Returns if there is any word in the trie that starts with the given prefix.
+         */
         public boolean startsWith(String prefix) {
             Node cur = root;
-            for (int i = 0; i < prefix.length(); i++){
+            for (int i = 0; i < prefix.length(); i++) {
                 char c = prefix.charAt(i);
-                if (cur.next.get(c) == null){
+                if (cur.next.get(c) == null) {
                     return false;
                 }
                 cur = cur.next.get(c);

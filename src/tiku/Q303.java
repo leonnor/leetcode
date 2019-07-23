@@ -29,28 +29,29 @@ public class Q303 {
              */
             private Merger<E> merger;
 
-            public SegmentTree(E[] arr, Merger<E> merger){
+            public SegmentTree(E[] arr, Merger<E> merger) {
 
                 this.merger = merger;
 
-                data = (E[])new Object[arr.length];
-                for (int i = 0; i < arr.length; i++){
+                data = (E[]) new Object[arr.length];
+                for (int i = 0; i < arr.length; i++) {
                     data[i] = arr[i];
                 }
 
-                tree = (E[])new Object[4 * arr.length];
+                tree = (E[]) new Object[4 * arr.length];
                 buildSegmentTree(0, 0, data.length - 1);
             }
 
             /**
              * 在treeIndex的位置创建表示区间[l...r]的线段树
+             *
              * @param treeIndex
              * @param l
              * @param r
              */
-            private void buildSegmentTree(int treeIndex, int l, int r){
+            private void buildSegmentTree(int treeIndex, int l, int r) {
 
-                if (l == r){
+                if (l == r) {
                     tree[treeIndex] = data[l];
                     return;
                 }
@@ -71,12 +72,12 @@ public class Q303 {
                 tree[treeIndex] = merger.merge(tree[leftTreeIndex], tree[rightTreeIndex]);
             }
 
-            public int getSize(){
+            public int getSize() {
                 return data.length;
             }
 
-            public E get(int index){
-                if (index < 0 || index >= data.length){
+            public E get(int index) {
+                if (index < 0 || index >= data.length) {
                     throw new IllegalArgumentException("Index is illegal.");
                 }
                 return data[index];
@@ -84,32 +85,35 @@ public class Q303 {
 
             /**
              * 返回左孩子节点索引
+             *
              * @param index
              * @return
              */
-            private int leftChild(int index){
+            private int leftChild(int index) {
                 return 2 * index + 1;
             }
 
             /**
              * 返回右孩子节点索引
+             *
              * @param index
              * @return
              */
-            private int rightChild(int index){
+            private int rightChild(int index) {
                 return 2 * index + 2;
             }
 
             /**
              * 返回区间[queryL, queryR]的值
+             *
              * @param queryL
              * @param queryR
              * @return
              */
-            public E query(int queryL, int queryR){
+            public E query(int queryL, int queryR) {
 
                 if (queryL < 0 || queryL >= data.length ||
-                        queryR < 0 || queryR >= data.length || queryL > queryR){
+                        queryR < 0 || queryR >= data.length || queryL > queryR) {
                     throw new IllegalArgumentException("Index is illegal.");
                 }
                 return query(0, 0, data.length - 1, queryL, queryR);
@@ -117,6 +121,7 @@ public class Q303 {
 
             /**
              * 在以treeIndex为根的线段树中[l,r]的范围里，搜索区间[queryL,queryR]的值
+             *
              * @param treeIndex
              * @param l
              * @param r
@@ -124,12 +129,12 @@ public class Q303 {
              * @param queryR
              * @return
              */
-            private E query(int treeIndex, int l, int r, int queryL, int queryR){
+            private E query(int treeIndex, int l, int r, int queryL, int queryR) {
 
                 /**
                  * 递归终止条件
                  */
-                if (l == queryL && r == queryR){
+                if (l == queryL && r == queryR) {
                     return tree[treeIndex];
                 }
 
@@ -140,9 +145,9 @@ public class Q303 {
                 /**
                  * 查询区间只在左孩子或右孩子中的情况
                  */
-                if (queryL >= mid + 1){
+                if (queryL >= mid + 1) {
                     return query(rightTreeIndex, mid + 1, r, queryL, queryR);
-                } else if (queryR <= mid){
+                } else if (queryR <= mid) {
                     return query(leftTreeIndex, l, mid, queryL, queryR);
                 }
 
@@ -159,9 +164,9 @@ public class Q303 {
 
         public NumArray(int[] nums) {
 
-            if (nums.length > 0){
+            if (nums.length > 0) {
                 Integer[] data = new Integer[nums.length];
-                for (int i = 0; i < nums.length; i++){
+                for (int i = 0; i < nums.length; i++) {
                     data[i] = nums[i];
                 }
                 segmentTree = new SegmentTree<>(data, ((a, b) -> a + b));
@@ -170,7 +175,7 @@ public class Q303 {
 
         public int sumRange(int i, int j) {
 
-            if(segmentTree == null){
+            if (segmentTree == null) {
                 throw new IllegalArgumentException("");
             }
             return segmentTree.query(i, j);

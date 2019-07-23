@@ -12,9 +12,9 @@ public class Q237 {
     /**
      * Definition for singly-linked list.
      * public class ListNode {
-     *     int val;
-     *     ListNode next;
-     *     ListNode(int x) { val = x; }
+     * int val;
+     * ListNode next;
+     * ListNode(int x) { val = x; }
      * }
      */
     class Solution {
@@ -28,6 +28,9 @@ public class Q237 {
     class ListNode {
         int val;
         ListNode next;
-        ListNode(int x) { val = x; }
+
+        ListNode(int x) {
+            val = x;
+        }
     }
 }
